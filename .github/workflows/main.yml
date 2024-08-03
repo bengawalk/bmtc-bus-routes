@@ -46,8 +46,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      - name: Deploy dashboard to s3 bucket
+      - name: Deploy to s3 bucket
         run: aws s3 sync ./dist s3://${{ secrets.AWS_BPT_FRONTEND_BUCKET }}/
 
-      - name: Invalidate dashboard stage cloudfront
-        run: aws cloudfront create-invalidation --distribution-id AWS_BPT_CLOUDFRONT_DIST --paths "/*"
+      - name: Invalidate cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_BPT_CLOUDFRONT_DIST }} --paths "/*"
