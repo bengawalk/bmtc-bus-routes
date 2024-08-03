@@ -1,10 +1,12 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import {MAPBOX_TOKEN, ROUTES} from "../utils/constants.js";
+import _ from "lodash";
+import {MAPBOX_TOKEN, MAX_HISTORY_LENGTH, ROUTES} from "../utils/constants.js";
 
 import { Icon } from '@iconify/react';
 import Sidebar from "./sidebar.jsx";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import SearchResultItem from "../search/search_result_item.jsx";
 
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
@@ -12,75 +14,90 @@ class LandingPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      lat: 12.977529081680132,
-      lng: 77.57247169985196,
-      zoom: 11,
-      supported: mapboxgl.supported(),
+      historyItems: _.take(JSON.parse(localStorage.getItem("bpt_history") || "[]"), 3),
+      favourites: JSON.parse(localStorage.getItem("bpt_favourites") || "[]"),
     };
-    this.mapContainer = React.createRef();
   }
+  
+  onFavouriteClick = (e, info) => {
+    e.stopPropagation();
+    e.preventDefault();
 
-  initMap = () => {
-    if(!this.mapContainer.current) {
-      return;
+    const { favourites } = this.state;
+    const { id, text, type } = info;
+    let newFavourites =[];
+    if(_.some(favourites, f => f.id === id && f.type === type)) {
+        newFavourites = _.filter(favourites, f => !(f.id === id && f.type === type));
+    } else {
+        newFavourites = [
+            { id, text, type },
+            ...favourites
+        ];
     }
-    const { lng, lat, zoom } = this.state;
-    const map = new mapboxgl.Map({
-      container: this.mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [lng, lat],
-      zoom: zoom,
-      minZoom: 10,
-      maxZoom: 18,
+    this.setState({
+      favourites: newFavourites
     });
-    map.dragRotate.disable();
-    map.touchZoomRotate.disableRotation();
-
-    map.on("move", () => {
-      this.setState({
-        lng: map.getCenter().lng.toFixed(4),
-        lat: map.getCenter().lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
-      });
-    });
-    this.map = map;
-  };
-
-  componentDidMount() {
-    if (this.state.supported) {
-      this.initMap();
-      this.map?.on("load", () => {
-
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    this.map?.remove();
+    localStorage.setItem("bpt_favourites", JSON.stringify(newFavourites));
   }
 
   render() {
+    const { historyItems, favourites } = this.state;
     return (
-      <>
-        <div id="map" ref={this.mapContainer} className="map-container" />
+      <div id="landing-contents">
         <Sidebar />
-        <div id="landing-bottom">
           <Link id="landing-input" to={ROUTES.search}>
             <Icon icon="iconamoon:search-bold" color="#FFFFFF" width="16" height="16" />
             Where to?
           </Link>
-          <div id="landing-icons">
-            <button className="landing-button">
-              <Icon icon="tabler:star-filled" color="#FFD027" width="16" height="16" />
-            </button>
-            <button className="landing-button">
-              <Icon icon="tabler:current-location" color="#FFFFFF" width="22" height="22" />
-            </button>
-          </div>
+          {
+            _.size(historyItems) > 0 && (
+              <div className="landing-section">
+                <h3 className="subheading">Recent</h3>
+                {
+                  historyItems.map(i => {
+                      const isFavourite = _.some(favourites, f => f.id === i.id && f.type === i.type);
+                      return (
+                          <SearchResultItem
+                              key={`${i.id}-${i.text}`}
+                              info={i}
+                              isFavourite={isFavourite}
+                              onFavouriteClick={this.onFavouriteClick}
+                          />
+                      );
+                  })
+                }
+              </div>
+            )
+          }
+          {
+            _.size(favourites) > 0 && (
+              <div className="landing-section">
+                <h3 className="subheading">Favourites</h3>
+                {
+                  favourites.map(i => (
+                    <SearchResultItem
+                      isFavourite
+                      key={`${i.id}-${i.text}`}
+                      info={i}
+                      onFavouriteClick={this.onFavouriteClick}
+                    />
+                  ))
+                }
+              </div>
+            )
+          }
         </div>
-      </>
     );
   }
 }
 
-export default LandingPage;
+const LandingPageWithRouter = () => {
+  const location = useLocation();
+  console.log(location);
+  return (
+    <LandingPage />
+  )
+};
+
+
+export default LandingPageWithRouter;

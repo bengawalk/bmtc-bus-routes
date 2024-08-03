@@ -1,14 +1,18 @@
 export const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 export const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+export const BACKEND_HOST =  import.meta.env.VITE_PUBLIC_BACKEND_HOST;
+
+export const MAX_HISTORY_LENGTH = 20;
 
 export const ROUTES = {
   home: "/",
   search: "/search",
   favourites: "/favourites",
+  route: "/route/:route_id",
+  stop: "/stop/:stop_id",
+
   all_buses: "/all-buses",
   about: "/about",
-  bus_route: "/bus-route/:route_id",
-  bus_stop: "/bus-stop/:stop_id",
 };
 
 export const SEARCH_RESULT_TYPES = {
@@ -17,4 +21,11 @@ export const SEARCH_RESULT_TYPES = {
   metro_station_purple: "metro_station_purple",
   metro_station_green: "metro_station_green",
   bus_number: "bus_number",
+};
+
+export const API_CALL_STATUSES = {
+  INITIAL: "INITIAL",
+  PROGRESS: "PROGRESS",
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
 };

@@ -9,6 +9,8 @@ import {ROUTES} from "./utils/constants.js";
 import AboutPage from "./about/index.jsx";
 import AllBusesPage from "./all-buses";
 import FavouritesPage from "./favourites/index.jsx";
+import RoutePage from "./route";
+import StopPage from "./stop";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
   {
     path: ROUTES.favourites,
     element: <FavouritesPage />
+  },
+  {
+    path: ROUTES.route,
+    element: <RoutePage />
+  },
+  {
+    path: ROUTES.stop,
+    element: <StopPage />
   },
 ]);
 

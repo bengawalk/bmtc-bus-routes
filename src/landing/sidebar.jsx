@@ -32,13 +32,19 @@ const Sidebar = () => {
           Language<br />
           {
             LANGUAGES.map(l => (
-              <button onClick={() => setLanguage(l.code)} className={`sidebar-lang ${language === l.code ? "selected" : ""}`}>{l.text}</button>
+              <button
+                key={l.code}
+                onClick={() => setLanguage(l.code)}
+                className={`sidebar-lang ${language === l.code ? "selected" : ""}`}
+              >
+                {l.text}
+              </button>
             ))
           }
         </li>
-        <li>
+        {/* <li>
           <Link to={ROUTES.all_buses}>All BMTC bus routes</Link>
-        </li>
+        </li> */}
         <li>
           <Link to={ROUTES.favourites}>Favourites</Link>
         </li>
@@ -49,9 +55,12 @@ const Sidebar = () => {
 
     </div>
   ) : (
-    <button id="landing-hamburger" onClick={() => setSidebarOpen(true)}>
-      <Icon icon="ic:round-menu" color="#2D2D2D" width="36" height="36" />
-    </button>
+    <div id="landing-header">
+      <button id="landing-hamburger" onClick={() => setSidebarOpen(true)}>
+        <Icon icon="ic:round-menu" color="#2D2D2D" width="36" height="36" />
+      </button>
+      <h1>Plan your trip</h1>
+    </div>
   );
 };
 

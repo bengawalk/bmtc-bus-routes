@@ -1,38 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import _ from "lodash";
 import {Icon} from "@iconify/react/dist/iconify.js";
 import SearchResultItem from "../search/search_result_item";
-import {ROUTES, SEARCH_RESULT_TYPES} from "../utils/constants.js";
+import {MAX_HISTORY_LENGTH, ROUTES} from "../utils/constants.js";
 import {Link} from "react-router-dom";
 
-const FAVOURITES = [
-  {
-    type: SEARCH_RESULT_TYPES.location,
-    text: "Mayur Paradise",
-    favourite: true,
-  },
-  {
-    type: SEARCH_RESULT_TYPES.bus_stop,
-    text: "Tippasandra Market Bus Stop",
-    favourite: true,
-  },
-  {
-    type: SEARCH_RESULT_TYPES.metro_station_purple,
-    text: "Nadaprabhu Kempegowda Metro Station, Majestic",
-    favourite: true,
-  },
-  {
-    type: SEARCH_RESULT_TYPES.bus_number,
-    text: "314",
-    favourite: true,
-  },
-  {
-    type: SEARCH_RESULT_TYPES.bus_number,
-    text: "333G",
-    favourite: true,
-  },
-];
-
 const FavouritesPage = () => {
+  const [favourites, setFavouritesItems] = useState(
+      JSON.parse(localStorage.getItem("bpt_favourites") || "[]")
+  );
+
+  const removeFromFavourites = (e, info) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const { id, type } = info;
+    const newFavourites = _.filter(favourites, f => !(f.id === id && f.type === type));
+    setFavouritesItems(newFavourites);
+    localStorage.setItem("bpt_favourites", JSON.stringify(newFavourites));
+  }
+
   return (
     <>
       <div id="page-header">
@@ -47,7 +34,19 @@ const FavouritesPage = () => {
       </div>
       <div id="search-results">
         {
-          FAVOURITES.map(i => <SearchResultItem key={i.text} info={i} />)
+          _.size(favourites) > 0 ? (
+            favourites.map(i => (
+              <SearchResultItem
+                isFavourite
+                key={`${i.id}-${i.text}`}
+                info={i}
+                linkState={{ from: ROUTES.favourites }}
+                onFavouriteClick={removeFromFavourites}
+              />
+            ))
+          ) : (
+            "You do not have any favourites added"
+          )
         }
       </div>
     </>
