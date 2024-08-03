@@ -1,5 +1,4 @@
 export const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
-export const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 export const BACKEND_HOST =  import.meta.env.VITE_PUBLIC_BACKEND_HOST;
 
 export const MAX_HISTORY_LENGTH = 20;
