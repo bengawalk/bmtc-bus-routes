@@ -5,7 +5,7 @@ import {Icon} from "@iconify/react/dist/iconify.js";
 import mapboxgl from "mapbox-gl";
 import { MAPBOX_TOKEN, MAX_HISTORY_LENGTH, SEARCH_RESULT_TYPES } from "../utils/constants.js";
 
-import IconBusStop from "../assets/icon_bus_stop.svg";
+import IconBusStop from "../assets/icon-bus-stop-new.svg";
 import BusStopRouteItem from "./bus-stop-route-item.jsx";
 import { getStopDetailsApi } from "../utils/api.js";
 import BottomTray from "../components/bottom_tray.jsx";
@@ -144,10 +144,11 @@ class StopPage extends React.PureComponent {
               <BottomTray
                 headerContent={(
                   <div id="page-heading">
+                    <img src={IconBusStop} alt="" id="header-icon" />
                     <p>
-                      <img src={IconBusStop} alt="" id="header-icon" />
                       { stopDetails.stop_name }
                     </p>
+                    <div className="flex-gap" />
                     <button className="search-result-favourite" onClick={this.toggleFavourite}>
                       {
                         isFavourited ? (

@@ -5,8 +5,8 @@ import { MAPBOX_TOKEN, MAX_HISTORY_LENGTH, ROUTES, SEARCH_RESULT_TYPES } from ".
 import {Icon} from "@iconify/react/dist/iconify.js";
 import mapboxgl from "mapbox-gl";
 
-import IconBusNumber from "../assets/icon_bus_number.svg";
-import IconBusStop from "../assets/icon_bus_stop.svg";
+import IconBusNumber from "../assets/icon-bus-route-new.svg";
+import IconBusStop from "../assets/icon-bus-stop-new.svg";
 import IconGreenCircle from "../assets/icon_green_circle.svg";
 import IconLocation from "../assets/icon_location.svg";
 import { getRouteDetailsApi } from "../utils/api.js";
@@ -214,12 +214,13 @@ class RoutePage extends React.PureComponent {
               <BottomTray
                 headerContent={(
                   <div id="page-heading">
+                    <img src={IconBusNumber} alt="" id="header-icon" />
                     <p>
-                      <img src={IconBusNumber} alt="" id="header-icon" />
                       <span className="bus_number">
                         {routeDetails.route_short_name}
                       </span>
                     </p>
+                    <div className="flex-gap" />
                     <button className="search-result-favourite" onClick={this.toggleFavourite}>
                       {
                         isFavourited ? (

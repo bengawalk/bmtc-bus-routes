@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
-import IconBusNumber from "../assets/icon_bus_number.svg";
+import IconBusNumber from "../assets/icon-bus-route-new.svg";
 import {ROUTES, SEARCH_RESULT_TYPES} from "../utils/constants.js";
 
 const BusStopRouteItem = ({ info }) => {
