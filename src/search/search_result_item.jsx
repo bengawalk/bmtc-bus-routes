@@ -1,17 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import IconBusStop from "../assets/icon_bus_stop.svg";
-import IconBusNumber from "../assets/icon_bus_number.svg";
+// import IconBusStop from "../assets/icon_bus_stop.svg";
+// import IconBusNumber from "../assets/icon_bus_number.svg";
 import IconMetroPurple from "../assets/icon_metro_purple.svg";
 import IconMetroGreen from "../assets/icon_metro_green.svg";
 import IconLocation from "../assets/icon_location.svg";
+
+import IconBusStopNew from "../assets/icon-bus-stop-new.svg";
+import IconBusRouteNew from "../assets/icon-bus-route-new.svg";
+
 import {SEARCH_RESULT_TYPES} from "../utils/constants.js";
 import {Icon} from "@iconify/react/dist/iconify.js";
 
+
 const IconForResultType = {
-  [SEARCH_RESULT_TYPES.bus_stop]: IconBusStop,
-  [SEARCH_RESULT_TYPES.bus_number]: IconBusNumber,
+  [SEARCH_RESULT_TYPES.bus_stop]: IconBusStopNew,
+  [SEARCH_RESULT_TYPES.bus_number]: IconBusRouteNew,
   [SEARCH_RESULT_TYPES.metro_station_green]: IconMetroGreen,
   [SEARCH_RESULT_TYPES.metro_station_purple]: IconMetroPurple,
   [SEARCH_RESULT_TYPES.location]: IconLocation,

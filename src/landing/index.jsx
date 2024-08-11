@@ -5,7 +5,7 @@ import {MAPBOX_TOKEN, MAX_HISTORY_LENGTH, ROUTES} from "../utils/constants.js";
 
 import { Icon } from '@iconify/react';
 import Sidebar from "./sidebar.jsx";
-import {Link, useLocation} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SearchResultItem from "../search/search_result_item.jsx";
 
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -91,13 +91,4 @@ class LandingPage extends React.PureComponent {
   }
 }
 
-const LandingPageWithRouter = () => {
-  const location = useLocation();
-  console.log(location);
-  return (
-    <LandingPage />
-  )
-};
-
-
-export default LandingPageWithRouter;
+export default LandingPage;

@@ -65,9 +65,9 @@ class BottomTray extends React.PureComponent {
     }
     
     onPointerDown = (e) => {
-        if (window.innerWidth > 999) {
-          return;
-        }
+        // if (window.innerWidth > 999) {
+        //   return;
+        // }
         const [x, y] = getCoordinatesFromEvent(e);
         this.mouseTime = performance.now();
         this.setState({ x, y });

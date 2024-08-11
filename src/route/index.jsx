@@ -36,6 +36,7 @@ class RoutePage extends React.PureComponent {
       // lat: 12.977529081680132,
       // lng: 77.57247169985196,
       // zoom: 11,
+      tripIndex: 0,
       supported: mapboxgl.supported(),
       isFavourited: false,
     };
@@ -122,7 +123,7 @@ class RoutePage extends React.PureComponent {
 
 
     // Update route line data
-    const coordinates = routeDetails.shapeInformation.line;
+    const coordinates = routeDetails.shapeInformation[0].line;
     afterMapLoad(this.map, () => {
       this.map.getSource('route').setData({
           'type': 'Feature',
@@ -136,7 +137,7 @@ class RoutePage extends React.PureComponent {
       // Set map boundaries to the line
       const bounds = new mapboxgl.LngLatBounds(coordinates[0],coordinates[0]);
       for (const coord of coordinates) { bounds.extend(coord); }
-      this.map.fitBounds(bounds, { padding: 20 });
+      this.map.fitBounds(bounds, { padding: { left: 20, right: 20, top: 20, bottom: 220 }});
 
       // Add start and end markers
       const sourceDetails = _.find(
@@ -202,6 +203,7 @@ class RoutePage extends React.PureComponent {
     const { routeDetails, isFavourited } = this.state;
     const [from, to] = (routeDetails?.route_long_name || "").split("→");
 
+    // console.log(routeDetails);
     return (
       <>
         <div id="map" ref={this.mapContainer} className="map-container" />
