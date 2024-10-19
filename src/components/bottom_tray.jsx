@@ -30,12 +30,12 @@ class BottomTray extends React.PureComponent {
     }
     
     componentDidMount() {
-        (window.visualViewport || window).addEventListener("resize", this.onResize);
-        this.onResize();
-        window.addEventListener("mousemove", this.onPointerMove, { passive: true });
-        window.addEventListener("touchmove", this.onPointerMove, { passive: true });
-        window.addEventListener("mouseup", this.onPointerUp, { passive: true });
-        window.addEventListener("touchend", this.onPointerUp, { passive: true });
+        // (window.visualViewport || window).addEventListener("resize", this.onResize);
+        // this.onResize();
+        // window.addEventListener("mousemove", this.onPointerMove, { passive: true });
+        // window.addEventListener("touchmove", this.onPointerMove, { passive: true });
+        // window.addEventListener("mouseup", this.onPointerUp, { passive: true });
+        // window.addEventListener("touchend", this.onPointerUp, { passive: true });
     }
     
     componentWillUnmount() {
@@ -110,31 +110,32 @@ class BottomTray extends React.PureComponent {
         }
     };
 
-    onResize = () => {
-        this.setState({
-            bodyHeight: window.visualViewport?.height || window.innerHeight,
-        });
-    };
+    // onResize = () => {
+    //     this.setState({
+    //         bodyHeight: window.visualViewport?.height || window.innerHeight,
+    //     });
+    // };
     render() {
         const {
-            children,
             headerContent,
+            children,
           } = this.props;
-          const { move, bodyHeight } = this.state;
+          // const { move, bodyHeight } = this.state;
           return (
-            <div
+            <>
+              <div
                 id="bottom-tray"
-                style={{
-                    top: `${bodyHeight - COLLAPSED_HEIGHT + move}px`,
-                    height: `${
-                        -move + COLLAPSED_HEIGHT
-                    }px`,
-                }}
-                className={classNames({
-                    "sharp-corners": move < -COLLAPSED_HEIGHT,
-                })}
-            >
-                <div id="bottom-tray-drag-indicator" />
+                // style={{
+                //     top: `${bodyHeight - COLLAPSED_HEIGHT + move}px`,
+                //     height: `${
+                //         -move + COLLAPSED_HEIGHT
+                //     }px`,
+                // }}
+                // className={classNames({
+                //     "sharp-corners": move < -COLLAPSED_HEIGHT,
+                // })}
+              >
+                {/* <div id="bottom-tray-drag-indicator" /> */}
                 <div
                     id="bottom-tray-header"
                     onMouseDown={this.onPointerDown}
@@ -145,7 +146,8 @@ class BottomTray extends React.PureComponent {
                 <div id="bottom-tray-content">
                     { children }
                 </div>
-            </div>
+              </div>
+            </>
           )
     }
 };

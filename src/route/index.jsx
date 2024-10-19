@@ -199,13 +199,26 @@ class RoutePage extends React.PureComponent {
     localStorage.setItem("bpt_favourites", JSON.stringify(newFavourites));
   };
 
+  onContainerScroll = (e) => {
+    // TODO;
+    // const windowHeight = window.innerHeight;
+    // const topHeight = windowHeight * 0.8 - 30;
+    // const containerScrollTop = e.target.scrollTop;
+    // const gapAtTop = topHeight - containerScrollTop;
+    // if(gapAtTop < 0.2 * windowHeight) {
+    //   e.target.animate({
+    //     scrollTop: topHeight,
+    //   });
+    // }
+  }
+
   render() {
     const { routeDetails, isFavourited } = this.state;
     const [from, to] = (routeDetails?.route_long_name || "").split("→");
 
     const tripWithTheMostStops = _.maxBy(routeDetails?.route_trips, t => t.timings.length);
     return (
-      <>
+      <div id="tray-page-wrapper" onScroll={this.onContainerScroll}>
         <div id="map" ref={this.mapContainer} className="map-container" />
         {
           !!routeDetails && (
@@ -291,7 +304,7 @@ class RoutePage extends React.PureComponent {
             </>
           )
         }
-      </>
+      </div>
     );
   }
 };
