@@ -58,8 +58,8 @@ class StopPage extends React.PureComponent {
     this.getStopDetails();
     if (this.state.supported) {
       this.initMap();
-      this.map?.on("load", () => {
-
+      afterMapLoad(this.map, () => {
+        this.map.resize();
       });
     }
   }
@@ -135,8 +135,10 @@ class StopPage extends React.PureComponent {
     const { stopDetails, isFavourited } = this.state;
 
     return (
-      <>
-        <div id="map" ref={this.mapContainer} className="map-container" />
+      <div id="tray-page-wrapper" onScroll={this.onContainerScroll}>
+        <div id="map-wrapper">
+          <div id="map" ref={this.mapContainer} className="map-container" />
+        </div>
         {
           !!stopDetails && (
             <>
@@ -171,7 +173,7 @@ class StopPage extends React.PureComponent {
             </>
           )
         }
-      </>
+      </div>
     );
   }
 };

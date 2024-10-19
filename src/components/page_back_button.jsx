@@ -5,7 +5,6 @@ import { ROUTES } from "../utils/constants";
 
 const PageBackButton = () => {
     const location = useLocation();
-    // console.log(location.state);
     const onBackClick = () => {
         if(!!location.state) {
             window.history.back();

@@ -56,6 +56,7 @@ class RoutePage extends React.PureComponent {
       minZoom: 10,
       maxZoom: 18,
     });
+    map.resize();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
 
@@ -121,10 +122,13 @@ class RoutePage extends React.PureComponent {
       isFavourited: _.some(favourites, f => f.type === 'bus_number' && f.id === routeDetails.route_id),
     });
 
+    const tripWithTheMostStops = _.maxBy(routeDetails?.route_trips, t => t.timings.length);
+    const mapPadding = window.innerWidth > 768 ? ({ left: 50, right: 50, top: 50, bottom: 50 }) : ({ left: 30, right: 30, top: 30, bottom: 60 });
 
     // Update route line data
-    const coordinates = routeDetails.shapeInformation[0].line;
+    const coordinates = _.find(routeDetails.shapeInformation, { shape_id: tripWithTheMostStops.shape_id })?.line;
     afterMapLoad(this.map, () => {
+      this.map.resize();
       this.map.getSource('route').setData({
           'type': 'Feature',
           'properties': {},
@@ -137,13 +141,13 @@ class RoutePage extends React.PureComponent {
       // Set map boundaries to the line
       const bounds = new mapboxgl.LngLatBounds(coordinates[0],coordinates[0]);
       for (const coord of coordinates) { bounds.extend(coord); }
-      this.map.fitBounds(bounds, { padding: { left: 20, right: 20, top: 20, bottom: 220 }});
+      this.map.fitBounds(bounds, { padding: mapPadding});
 
       // Add start and end markers
       const sourceDetails = _.find(
         routeDetails.stopInformation,
         {
-           stop_id: _.first(routeDetails.route_trips[0].timings).stop_id
+           stop_id: _.first(tripWithTheMostStops.timings).stop_id
         }
       );
       const sourceEl = document.createElement('div');
@@ -153,7 +157,7 @@ class RoutePage extends React.PureComponent {
       const destinationDetails = _.find(
         routeDetails.stopInformation,
         {
-           stop_id: _.last(routeDetails.route_trips[0].timings).stop_id
+           stop_id: _.last(tripWithTheMostStops.timings).stop_id
         }
       );
       const destinationEl = document.createElement('div');
@@ -214,13 +218,29 @@ class RoutePage extends React.PureComponent {
 
   render() {
     const { routeDetails, isFavourited } = this.state;
-    const [from, to] = (routeDetails?.route_long_name || "").split("→");
-
     const tripWithTheMostStops = _.maxBy(routeDetails?.route_trips, t => t.timings.length);
+    let sourceDetails, destinationDetails;
+    if(tripWithTheMostStops) {
+      sourceDetails = _.find(
+        routeDetails.stopInformation,
+        {
+           stop_id: _.first(tripWithTheMostStops.timings).stop_id
+        }
+      );
+      destinationDetails = _.find(
+        routeDetails.stopInformation,
+        {
+           stop_id: _.last(tripWithTheMostStops.timings).stop_id
+        }
+      );
+    }
+
     return (
       <div id="tray-page-wrapper" onScroll={this.onContainerScroll}>
-        <div id="map" ref={this.mapContainer} className="map-container" />
-        {
+        <div id="map-wrapper">
+          <div id="map" ref={this.mapContainer} className="map-container" />
+        </div>
+          {
           !!routeDetails && (
             <>
               <PageBackButton />
@@ -251,11 +271,11 @@ class RoutePage extends React.PureComponent {
                     <div>
                       <div className="bus-stop-item-row">
                         <div className="bus-stop-item-fromto">From </div>
-                        {_.trim(from)}
+                        {sourceDetails?.stop_name}
                       </div>
                       <div className="bus-stop-item-row">
                         <div className="bus-stop-item-fromto">To </div>
-                        {_.trim(to)}
+                        {destinationDetails?.stop_name}
                       </div>
                     </div>
                     {/* <button id="bus-route-flip">
@@ -280,7 +300,7 @@ class RoutePage extends React.PureComponent {
                           let stopType = STOP_TYPES.stop;
                           if(index === 0) {
                             stopType = STOP_TYPES.source;
-                          } else if(index === _.size(routeDetails.route_trips[0].timings) - 1) {
+                          } else if(index === _.size(tripWithTheMostStops.timings) - 1) {
                             stopType = STOP_TYPES.destination;
                           }
                           return (

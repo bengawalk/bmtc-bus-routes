@@ -127,10 +127,6 @@ body {
 
 #bottom-tray {
   position: relative;
-  // left: 0;
-  // right: 0;
-  // top: 0;
-  //top: calc(100vh - 90px);
   margin-top: calc(80vh - 30px);
   z-index: 1000;
   background-color: #ffffff;
@@ -184,6 +180,11 @@ body {
 ********************/
 
 #map {
+  height: 100%;
+  width: 100%;
+}
+
+#map-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -546,3 +547,28 @@ body {
   transform: translate(0, -15px);
 }
 
+@media screen and (min-width: 768px) {
+  #tray-page-wrapper {
+    flex-direction: row-reverse;
+  }
+  #map-wrapper {
+    position: relative;
+    height: 100vh;
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 10px;
+  }
+  #bottom-tray {
+    width: 400px;
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mapboxgl-ctrl-bottom-left {
+    bottom: 30px;
+  }
+  .mapboxgl-ctrl-bottom-right {
+    bottom: 30px;
+  }
+}
