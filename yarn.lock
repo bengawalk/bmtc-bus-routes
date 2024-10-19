@@ -2498,6 +2498,11 @@ vite-plugin-html-config@^2.0.2:
   resolved "https://registry.yarnpkg.com/vite-plugin-html-config/-/vite-plugin-html-config-2.0.2.tgz#b58a474c1bc1a838ea3c849844ece545a5fc0216"
   integrity sha512-g09u0XsmgKyMUIp1RZSyNSkJWvIusaXxw3KylyxU3vkCq7/G8hyemLctT+4IvO42fCPlNySmrNC9g0qSoKmvpw==
 
+vite-plugin-radar@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/vite-plugin-radar/-/vite-plugin-radar-0.9.6.tgz#59ae700d478e495cad0c46f7b968550690dbd234"
+  integrity sha512-tLvUt7+iZznxYa8GmCrZBV3Q0fLQApsyg9EIJgaen8DjGky3vFIq9KoDWAoVMs9FZ5qbsSBb3YfSvoqwVV+5xw==
+
 vite@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vite/-/vite-5.0.0.tgz#3bfb65acda2a97127e4fa240156664a1f234ce08"

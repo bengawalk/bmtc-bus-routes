@@ -19,7 +19,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.19.0",
     "sass": "^1.69.5",
-    "vite-plugin-html-config": "^2.0.2"
+    "vite-plugin-html-config": "^2.0.2",
+    "vite-plugin-radar": "^0.9.6"
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",

@@ -1,6 +1,7 @@
 import { resolve } from "path";
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePluginRadar } from 'vite-plugin-radar';
 import htmlPlugin from 'vite-plugin-html-config';
 
 const htmlPluginOptions = process.env.NODE_ENV !== "development" ? {} : {
@@ -18,5 +19,14 @@ const htmlPluginOptions = process.env.NODE_ENV !== "development" ? {} : {
 
 export default defineConfig({
   envDir: resolve(__dirname),
-  plugins: [react(), htmlPlugin(htmlPluginOptions)],
+  plugins: [
+    react(),
+    VitePluginRadar({
+      // Google Analytics tag injection
+      analytics: {
+        id: 'G-1FX33BYDE4',
+      },
+    }),
+    htmlPlugin(htmlPluginOptions)
+  ],
 })
