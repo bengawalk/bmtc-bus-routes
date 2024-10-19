@@ -47,7 +47,7 @@ class LandingPage extends React.PureComponent {
         <Sidebar />
           <Link id="landing-input" to={ROUTES.search}>
             <Icon icon="iconamoon:search-bold" color="#FFFFFF" width="16" height="16" />
-            Where to?
+            Search for a bus route or bus stop
           </Link>
           {
             _.size(historyItems) > 0 && (

@@ -59,7 +59,7 @@ const SearchPage = () => {
           id="search-input"
           value={searchText}
           onChange={e => setSearchText(e.target.value)}
-          placeholder="Search for a bus, metro, or bus stop"
+          placeholder="Search for a bus, or bus stop"
         />
       </div>
       <SearchResults

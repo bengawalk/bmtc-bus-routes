@@ -1,4 +1,4 @@
-name: Workflow for build and deploy of the BLR public transport webapp frontend to AWS
+name: Workflow for build and deploy of the BMTC bus routes webapp frontend to AWS
 on:
   push:
     branches:

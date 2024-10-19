@@ -56,10 +56,10 @@ const Sidebar = () => {
     </div>
   ) : (
     <div id="landing-header">
-      <button id="landing-hamburger" onClick={() => setSidebarOpen(true)}>
+      {/* <button id="landing-hamburger" onClick={() => setSidebarOpen(true)}>
         <Icon icon="ic:round-menu" color="#2D2D2D" width="36" height="36" />
-      </button>
-      <h1>Plan your trip</h1>
+      </button> */}
+      <h1>BMTC bus routes</h1>
     </div>
   );
 };

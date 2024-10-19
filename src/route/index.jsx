@@ -203,7 +203,7 @@ class RoutePage extends React.PureComponent {
     const { routeDetails, isFavourited } = this.state;
     const [from, to] = (routeDetails?.route_long_name || "").split("→");
 
-    // console.log(routeDetails);
+    const tripWithTheMostStops = _.maxBy(routeDetails?.route_trips, t => t.timings.length);
     return (
       <>
         <div id="map" ref={this.mapContainer} className="map-container" />
@@ -254,12 +254,12 @@ class RoutePage extends React.PureComponent {
                     <h4>
                       Stops on route
                     </h4>
-                    <span>Timing at the stop</span>
+                    {/* <span>Timing at the stop</span> */}
                   </div>
                   <div id="bus-route-stops-list">
                     {
                       _.map(
-                        routeDetails.route_trips[0].timings,
+                        tripWithTheMostStops.timings,
                         (s, index) => {
                           const stopDetails = _.find(routeDetails.stopInformation, {
                             stop_id: s.stop_id,
@@ -275,9 +275,9 @@ class RoutePage extends React.PureComponent {
                               <img src={ICON_FOR_STOP_TYPE[stopType]} alt="" className="bus-route-stop-icon" />
                               <Link state={{ from: ROUTES.route }} to={`/stop/${s.stop_id}`} className="bus-route-stop-text">{stopDetails.stop_name}</Link>
                               <span className="bus-route-stop-time">
-                              {
+                              {/* {
                                 s.arrival_time.substring(0, 5)
-                              }
+                              } */}
                             </span>
                             </div>
                           );
