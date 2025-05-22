@@ -534,7 +534,9 @@ body {
   height: 30px;
   border-radius: 50%;
   cursor: pointer;
-  transform: translate(0, -15px);
+  svg {
+    display: none !important;
+  }
 }
 
 .destination-marker {
@@ -545,6 +547,9 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transform: translate(0, -15px);
+  svg {
+    display: none !important;
+  }
 }
 
 @media screen and (min-width: 768px) {

@@ -150,7 +150,7 @@ class RoutePage extends React.PureComponent {
       );
       const sourceEl = document.createElement('div');
       sourceEl.className = 'source-marker';
-      new maplibregl.Marker(sourceEl).setLngLat(sourceDetails.stop_loc).addTo(this.map);
+      new maplibregl.Marker(sourceEl).setLngLat(sourceDetails.stop_loc).addTo(this.map).setOffset([0, 15]);
 
       const destinationDetails = _.find(
         routeDetails.stopInformation,
