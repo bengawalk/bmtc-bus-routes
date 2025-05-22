@@ -45,3 +45,20 @@ export const afterMapLoad = (map, fn) => {
     });
   }
 };
+
+export const isWebglSupported = () => {
+  if (window.WebGLRenderingContext) {
+    const canvas = document.createElement("canvas");
+    try {
+      const context = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      if (context && typeof context.getParameter == "function") {
+        return true;
+      }
+    } catch (e) {
+      // WebGL is supported, but disabled
+    }
+    return false;
+  }
+  // WebGL not supported
+  return false;
+}

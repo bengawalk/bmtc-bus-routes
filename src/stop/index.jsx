@@ -2,17 +2,15 @@ import React from "react";
 import _ from "lodash";
 import { useParams} from "react-router-dom";
 import {Icon} from "@iconify/react/dist/iconify.js";
-import mapboxgl from "mapbox-gl";
-import { MAPBOX_TOKEN, MAX_HISTORY_LENGTH, SEARCH_RESULT_TYPES } from "../utils/constants.js";
+import maplibregl from "maplibre-gl";
+import { MAX_HISTORY_LENGTH, SEARCH_RESULT_TYPES } from "../utils/constants.js";
 
 import IconBusStop from "../assets/icon-bus-stop-new.svg";
 import BusStopRouteItem from "./bus-stop-route-item.jsx";
 import { getStopDetailsApi } from "../utils/api.js";
 import BottomTray from "../components/bottom_tray.jsx";
 import PageBackButton from "../components/page_back_button.jsx";
-import { afterMapLoad } from "../utils/index.js";
-
-mapboxgl.accessToken = MAPBOX_TOKEN;
+import { afterMapLoad, isWebglSupported } from "../utils/index.js";
 
 class StopPage extends React.PureComponent {
   constructor(props) {
@@ -22,7 +20,7 @@ class StopPage extends React.PureComponent {
       // lat: 12.977529081680132,
       // lng: 77.57247169985196,
       // zoom: 11,
-      supported: mapboxgl.supported(),
+      supported: isWebglSupported(),
       isFavourited: false,
     };
     this.mapContainer = React.createRef();
@@ -32,10 +30,9 @@ class StopPage extends React.PureComponent {
     if(!this.mapContainer.current) {
       return;
     }
-    const { lng, lat, zoom } = this.state;
-    const map = new mapboxgl.Map({
+    const map = new maplibregl.Map({
       container: this.mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "https://tiles.openfreemap.org/styles/liberty",
       center: [77.57247169985196, 12.977529081680132],
       zoom: 11,
       minZoom: 10,
@@ -87,7 +84,7 @@ class StopPage extends React.PureComponent {
     afterMapLoad(this.map, () => {
       const sourceEl = document.createElement('div');
       sourceEl.className = 'destination-marker';
-      new mapboxgl.Marker(sourceEl).setLngLat(stopDetails.stop_loc).addTo(this.map);
+      new maplibregl.Marker(sourceEl).setLngLat(stopDetails.stop_loc).addTo(this.map);
       this.map.flyTo({
         center: stopDetails.stop_loc,
         zoom: 17,

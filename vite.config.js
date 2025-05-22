@@ -8,9 +8,9 @@ const htmlPluginOptions = process.env.NODE_ENV !== "development" ? {} : {
   metas: [
     {
       name: 'Content-Security-Policy',
-      content: `default-src *.bengawalk.com *.sentry.io *.mapbox.com maps.googleapis.com *.google-analytics.com 'self';
+      content: `default-src *.bengawalk.com *.sentry.io maps.googleapis.com *.google-analytics.com 'self';
         img-src * 'self' data:;
-        style-src *.mapbox.com fonts.googleapis.com 'unsafe-inline' 'self';
+        style-src fonts.googleapis.com 'unsafe-inline' 'self';
         font-src fonts.gstatic.com;
         worker-src 'self' blob:;`,
     }

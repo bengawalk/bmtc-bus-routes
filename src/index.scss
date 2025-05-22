@@ -565,10 +565,7 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .mapboxgl-ctrl-bottom-left {
-    bottom: 30px;
-  }
-  .mapboxgl-ctrl-bottom-right {
+  .maplibregl-ctrl {
     bottom: 30px;
   }
 }

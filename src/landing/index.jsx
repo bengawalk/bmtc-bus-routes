@@ -1,14 +1,11 @@
 import React from "react";
-import mapboxgl from "mapbox-gl";
 import _ from "lodash";
-import {MAPBOX_TOKEN, MAX_HISTORY_LENGTH, ROUTES} from "../utils/constants.js";
+import {MAX_HISTORY_LENGTH, ROUTES} from "../utils/constants.js";
 
 import { Icon } from '@iconify/react';
 import Sidebar from "./sidebar.jsx";
 import { Link } from "react-router-dom";
 import SearchResultItem from "../search/search_result_item.jsx";
-
-mapboxgl.accessToken = MAPBOX_TOKEN;
 
 class LandingPage extends React.PureComponent {
   constructor(props) {
